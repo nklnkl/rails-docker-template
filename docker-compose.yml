@@ -14,7 +14,7 @@ services:
   web:
     build: .
     volumes:
-      - .:/app
+      - .:/rails
     ports:
       - "3000:3000"
     depends_on:
