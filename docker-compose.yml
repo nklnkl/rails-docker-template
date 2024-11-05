@@ -12,16 +12,20 @@ services:
       - "5432:5432"
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE:-Dockerfile.dev}
     volumes:
       - .:/rails
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    environment:
+      RAILS_ENV: ${RAILS_ENV:-development}
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       - db
-    environment:
-      RAILS_ENV: ${RAILS_ENV}
-      DATABASE_URL: ${DATABASE_URL}
     tty: true
     stdin_open: true
 
