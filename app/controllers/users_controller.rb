@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     render json: current_user, only: [
-      :id, 
+      :id,
       :email,
       :sign_in_count,
       :current_sign_in_at,
