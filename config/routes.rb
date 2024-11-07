@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user, defaults: { format: :json }
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -10,4 +11,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   get "users", to: "users#show"
+  get "users/sign_ins", to: "users#active_jwts"
+  delete "users/sign_ins/:jti", to: "users#delete_jwt"
+  delete "users/sign_ins", to: "users#delete_all_jwts"
 end
