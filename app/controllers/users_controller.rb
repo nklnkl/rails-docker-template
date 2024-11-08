@@ -13,6 +13,10 @@ class UsersController < ApplicationController
     ]
   end
 
+  def jwt
+    render json: current_user.jwt(params[:jti])
+  end
+
   def active_jwts
     render json: current_user.active_jwts
   end

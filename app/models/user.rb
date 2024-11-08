@@ -9,6 +9,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  def jwt(jti)
+    allowlisted_jwts.find_by!(jti: jti)
+  end
+
   def active_jwts
     allowlisted_jwts.where('exp > ?', Time.current).map do |jwt|
       {
@@ -20,7 +24,8 @@ class User < ApplicationRecord
   end
 
   def delete_jwt(jti)
-    allowlisted_jwts.find_by(jti: jti).destroy
+    jwt = jwt(jti)
+    jwt.destroy
   end
 
   def delete_all_jwts
