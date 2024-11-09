@@ -1,12 +1,13 @@
- # Rails API Docker Template
+# Rails API Docker Template
 
-This repository contains a template for developing a Ruby on Rails API using Docker. It's set up with PostgreSQL as the database and provides a streamlined development environment.
+This repository contains a template for developing a Ruby on Rails API using Docker. It's set up with PostgreSQL as the database and JWT authentication via Devise.
 
 ## Development Environment
 
 - Ruby version: 3.3.5
-- Rails version: 7.1.2
+- Rails version: 8.0.0
 - Database: PostgreSQL 13
+- Authentication: Devise with JWT
 
 ## Prerequisites
 
@@ -25,23 +26,20 @@ This repository contains a template for developing a Ruby on Rails API using Doc
    ```
    cp .env.example .env
    ```
+   
+   Make sure to set a secure `JWT_SECRET` in your `.env` file.
 
 3. Build the Docker images:
    ```
    docker-compose build
    ```
 
-4. Generate a new Rails API application:
-   ```
-   docker-compose run --rm web rails new . --api --force --database=postgresql
-   ```
-
-5. Start the services:
+4. Start the services:
    ```
    docker-compose up
    ```
 
-6. In another terminal, create and set up the database:
+5. In another terminal, create and set up the database:
    ```
    docker-compose exec web rails db:create db:migrate
    ```
@@ -63,7 +61,7 @@ For more detailed instructions on how to interact with the Docker container, inc
 
 1. Make changes to your code on your local machine.
 2. The changes will be automatically reflected in the running container due to volume mounting.
-3. Refresh your browser or API client to see the changes (you may need to restart the Rails server for some changes).
+3. Use the provided Insomnia collection for API testing.
 
 ## Stopping the Application
 
@@ -72,7 +70,6 @@ To stop the application:
 docker-compose down
 ```
 
-
 This will stop and remove the containers, but preserve the database data.
 
 ## Additional Information
@@ -80,6 +77,9 @@ This will stop and remove the containers, but preserve the database data.
 - The `config/database.yml` file is configured to use environment variables from the `.env` file.
 - The PostgreSQL data is persisted in a Docker volume.
 - The application code is mounted as a volume, allowing for live code reloading during development.
+- JWT configuration is in `config/initializers/devise.rb`
+- User authentication is handled via Devise with JWT tokens
+- Session tracking includes user agent and IP information
 
 ## Customization
 
@@ -99,7 +99,7 @@ If problems persist, check the Docker logs: `docker-compose logs`
 
 Now that you have a basic Rails API set up, you can start building your application:
 
-1. Generate models and controllers
+1. Generate additional models and controllers
 2. Set up your routes in `config/routes.rb`
 3. Implement your API endpoints
 4. Add authentication if needed
