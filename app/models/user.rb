@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def active_jwts
-    allowlisted_jwts.where('exp > ?', Time.current).map do |jwt|
+    allowlisted_jwts.where("exp > ?", Time.current).map do |jwt|
       {
         jti: jwt.jti,
         expires_at: jwt.exp,
